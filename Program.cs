@@ -15,7 +15,7 @@ var re = new RulesEngine.RulesEngine(workflows, null);
 // Simulate user input
 var userData = new
 {
-    services = new List<int> { 222,123, 789 },
+    services = new List<int> { 222, 123, 789 },
     geoGraphicalCode = 1231,
     numberOfItems = 10,
 };
@@ -29,14 +29,19 @@ var ruleParams = new List<RuleParameter> {
     new RuleParameter("numItems", userData.numberOfItems)
 }.ToArray();
 
-// Evaluate the rules against user input
-var resultList  = await re.ExecuteAllRulesAsync("DiscountWithCustomInputNames", ruleParams);
 
-//Check success for rule
-foreach (var result in resultList)
+foreach (var workflow in workflows)
 {
-    Console.WriteLine($"Rule - {result.Rule.RuleName}, IsSuccess - {result.IsSuccess}");
-    if(result.ActionResult != null){
-          Console.WriteLine(result.ActionResult.Output); //ActionResult.Output contains the evaluated value of the action
-      }
+    // Evaluate the rules against user input
+    var resultList = await re.ExecuteAllRulesAsync(workflow.WorkflowName, ruleParams);
+
+    //Check success for rule
+    foreach (var result in resultList)
+    {
+        Console.WriteLine($"Workflow {workflow.WorkflowName} => Rule - {result.Rule.RuleName}, IsSuccess - {result.IsSuccess}");
+        if (result.ActionResult != null)
+        {
+            Console.WriteLine(result.ActionResult.Output); //ActionResult.Output contains the evaluated value of the action
+        }
+    }
 }

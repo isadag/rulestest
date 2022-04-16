@@ -39,5 +39,28 @@
                 }
             }
         ]
+    },
+    {
+        "WorkflowName": "OtherDiscountRule",
+        "Rules": [
+            {
+                "RuleName": "NoDiscount",
+                "Expression": "new int[] { 999, 212 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "459837953"
+                        }
+                    },
+                    "OnFailure": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "12312"
+                        }
+                    }
+                }
+            }
+        ]
     }
 ]
