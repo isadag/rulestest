@@ -1,0 +1,43 @@
+[
+    {
+        "WorkflowName": "DiscountWithCustomInputNames",
+        "Rules": [
+            {
+                "RuleName": "GiveDiscount10",
+                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "399"
+                        }
+                    }
+                }
+            },
+            {
+                "RuleName": "GiveDiscount20",
+                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems < 10",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "299"
+                        }
+                    }
+                }
+            },
+            {
+                "RuleName": "GiveDiscount30",
+                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems >= 10",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "199"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+]
