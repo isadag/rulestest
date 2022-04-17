@@ -5,11 +5,12 @@ Sample app to test out Microsoft's Rules Engine: https://github.com/microsoft/Ru
 
 ### User data that is being fed into rules engine:
 ```
+// Simulate user input
 var userData = new
 {
-    services = new List<int> { 222, 123, 789 },
-    geoGraphicalCode = 1231,
-    numberOfItems = 10,
+    services = new List<string> { "212", "999" },
+    geoGraphicalCode = 7231,
+    numberOfItems = 4,
 };
 ```
 
@@ -21,7 +22,7 @@ var userData = new
         "Rules": [
             {
                 "RuleName": "GiveDiscount10",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Expression": "\"222, 123, 789\".Split(',').ToList().Select(x => x.Trim()).ToList().All(value => services.Contains(value)) AND geoCode != 231",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -33,7 +34,8 @@ var userData = new
             },
             {
                 "RuleName": "GiveDiscount20",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems < 10",
+                "Enabled": true,
+                "Expression": "new int[] { 123, 789, 222 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode == 231 AND numItems < 10",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -45,7 +47,8 @@ var userData = new
             },
             {
                 "RuleName": "GiveDiscount30",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems >= 10",
+                "Enabled": false,
+                "Expression": "new int[] { 123, 789, 222 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode == 231 AND numItems >= 10",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -61,8 +64,9 @@ var userData = new
         "WorkflowName": "OtherDiscountRule",
         "Rules": [
             {
+                "Enabled": true,
                 "RuleName": "NoDiscount",
-                "Expression": "new int[] { 999, 212 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Expression": "new int[] { 999, 212 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode != 231",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
