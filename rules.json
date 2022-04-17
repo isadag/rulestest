@@ -4,7 +4,7 @@
         "Rules": [
             {
                 "RuleName": "GiveDiscount10",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Expression": "\"222, 123, 789\".Split(',').ToList().Select(x => x.Trim()).ToList().All(value => services.Contains(value)) AND geoCode != 231",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -16,7 +16,8 @@
             },
             {
                 "RuleName": "GiveDiscount20",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems < 10",
+                "Enabled": true,
+                "Expression": "new int[] { 123, 789, 222 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode == 231 AND numItems < 10",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -28,7 +29,8 @@
             },
             {
                 "RuleName": "GiveDiscount30",
-                "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value)) AND geoCode == 231 AND numItems >= 10",
+                "Enabled": false,
+                "Expression": "new int[] { 123, 789, 222 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode == 231 AND numItems >= 10",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -44,8 +46,9 @@
         "WorkflowName": "OtherDiscountRule",
         "Rules": [
             {
+                "Enabled": true,
                 "RuleName": "NoDiscount",
-                "Expression": "new int[] { 999, 212 }.All(value => services.Contains(value)) AND geoCode != 231",
+                "Expression": "new int[] { 999, 212 }.Select(x => x.ToString()).All(value => services.Contains(value)) AND geoCode != 231",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",

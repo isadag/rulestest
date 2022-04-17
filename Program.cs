@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 using RulesEngine.Models;
 
@@ -15,9 +18,9 @@ var re = new RulesEngine.RulesEngine(workflows, null);
 // Simulate user input
 var userData = new
 {
-    services = new List<int> { 222, 123, 789 },
-    geoGraphicalCode = 1231,
-    numberOfItems = 10,
+    services = new List<string> { "212", "999" },
+    geoGraphicalCode = 7231,
+    numberOfItems = 4,
 };
 
 // "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value))"
