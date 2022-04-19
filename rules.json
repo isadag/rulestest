@@ -39,6 +39,11 @@
                         }
                     }
                 }
+            },
+            {
+                "RuleName": "RuleWithCustomEvaluators",
+                "Enabled": true,
+                "Expression": "Utils.MustContainAll(\"212\", services) == true AND Utils.StartsWithA(someString)"
             }
         ]
     },

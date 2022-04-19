@@ -32,7 +32,15 @@ namespace rulestest
 
             // Get the rules to evaluate
             var workflows = JsonSerializer.Deserialize<Workflow[]>(json);
-            var re = new RulesEngine.RulesEngine(workflows, _logger);
+
+            // Register our utils class so we can use our custom evaluator
+            var reSettingsWithCustomTypes = new ReSettings
+            {
+                CustomTypes = new Type[] {
+                    typeof(Utils)
+                }
+            };
+            var re = new RulesEngine.RulesEngine(workflows, _logger, reSettingsWithCustomTypes);
 
             // Simulate user input
             var userData = new
@@ -40,6 +48,7 @@ namespace rulestest
                 services = new List<string> { "212", "999" },
                 geoGraphicalCode = 7231,
                 numberOfItems = 4,
+                someString = "abc",
             };
 
             // "Expression": "new int[] { 123, 789, 222 }.All(value => services.Contains(value))"
@@ -48,7 +57,8 @@ namespace rulestest
             var ruleParams = new List<RuleParameter> {
                 new RuleParameter("services", userData.services),
                 new RuleParameter("geoCode", userData.geoGraphicalCode),
-                new RuleParameter("numItems", userData.numberOfItems)
+                new RuleParameter("numItems", userData.numberOfItems),
+                new RuleParameter("someString", userData.someString)
                 }.ToArray();
 
             Console.ForegroundColor = ConsoleColor.Black;
@@ -66,7 +76,9 @@ namespace rulestest
                     {
                         Console.WriteLine($"RESULT: Output is {result.ActionResult.Output}"); //ActionResult.Output contains the evaluated value of the action
                     }
+                    Console.WriteLine();
                 }
+                Console.WriteLine();
             }
             // Stop the app
             _hostLifetime.StopApplication();

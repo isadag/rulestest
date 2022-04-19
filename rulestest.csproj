@@ -12,4 +12,12 @@
     <PackageReference Include="RulesEngine" Version="3.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="rules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

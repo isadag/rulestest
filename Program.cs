@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using rulestest;
 
 CreateHostBuilder(args).Build().Run();
@@ -17,6 +17,7 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         {
             var env = hostingContext.HostingEnvironment;
 
+            config.SetBasePath(Directory.GetCurrentDirectory());
             config.AddEnvironmentVariables();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
         });
