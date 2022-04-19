@@ -11,8 +11,33 @@ var userData = new
     services = new List<string> { "212", "999" },
     geoGraphicalCode = 7231,
     numberOfItems = 4,
+    someString = "abc",
 };
 ```
+
+### Using custom evaluations from code in expressions in rules.json
+Create and register a static class with static methods, see `Utils.cs`, register it and pass it in to the rules engine like:
+
+```
+// Register our utils class so we can use our custom evaluator
+var reSettingsWithCustomTypes = new ReSettings
+{
+    CustomTypes = new Type[] {
+        typeof(Utils)
+    }
+};
+var re = new RulesEngine.RulesEngine(workflows, _logger, reSettingsWithCustomTypes);
+```
+
+#### Use the custom methods in the expressions like so:
+```
+{
+    "RuleName": "RuleWithCustomEvaluators",
+    "Enabled": true,
+    "Expression": "Utils.MustContainAll(\"212\", services) == true AND Utils.StartsWithA(someString)"
+}
+```
+
 
 ### Rules json:
 ```
@@ -57,6 +82,11 @@ var userData = new
                         }
                     }
                 }
+            },
+            {
+                "RuleName": "RuleWithCustomEvaluators",
+                "Enabled": true,
+                "Expression": "Utils.MustContainAll(\"212\", services) == true AND Utils.StartsWithA(someString)"
             }
         ]
     },
@@ -89,4 +119,4 @@ var userData = new
 
 
 ### Execution result:
-![](/readme_run_result.svg)
+![](/readme_run_result.png)
